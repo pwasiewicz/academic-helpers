@@ -5,7 +5,6 @@
 / Warning: use only in one-threaded application.
 */
 
-#define numeric long
 #define EOF_CHAR (-49)
 #define NEW_LINE 10
 #define MINUS_SIGN_MOD (-3)
@@ -16,7 +15,8 @@
 #define getchar_custom _fgetc_nolock
 #endif
 
-inline numeric read_number(bool* end, int * lastChar) {
+template<typename T>
+inline T read_number(bool* end, int * lastChar) {
 
 	register int read = getchar_custom(stdin) - 48;
 
@@ -37,7 +37,7 @@ inline numeric read_number(bool* end, int * lastChar) {
 		read = getchar_custom(stdin) - 48;
 	}
 
-	int returnValue = 0;
+	T returnValue = 0;
 
 	while (read >= 0 && read <= 9) {
 		returnValue = (returnValue << 3) + (returnValue << 1) + read;
@@ -49,12 +49,16 @@ inline numeric read_number(bool* end, int * lastChar) {
 	return returnValue * signModifier;
 }
 
-inline numeric read_number(bool* end) {
+
+template<typename T>
+inline  T read_number(bool* end) {
 	int lastChar;
-	return read_number(end, &lastChar);
+	return read_number<T>(end, &lastChar);
 }
 
-inline numeric read_number() {
+
+template<typename T>
+inline  T read_number() {
 	bool end;
-	return read_number(&end);
+	return read_number<T>(&end);
 }
